@@ -44,8 +44,8 @@ const SHOW_OFFAXIS = false;
       </article>
       <article style="display:flex;flex-direction:column;gap:6px">
         <p class="tag grey">EXPOSITORY</p>
-        <h3 style="margin:0;font-size:20px;font-weight:500">Diagonal Ramsey numbers</h3>
-        <p class="muted" style="margin:0">Part III essay, University of Cambridge · supervised by Tim Gowers · awarded a Distinction · <a href="#">pdf</a></p>
+        <h3 style="margin:0;font-size:20px;font-weight:500">Bounds for Ramsey Numbers</h3>
+        <p class="muted" style="margin:0">Part III essay, University of Cambridge · supervised by Tim Gowers · awarded a Distinction · <a href={`${base}/bounds-for-ramsey-numbers.pdf`}>pdf</a></p>
       </article>
       <article style="display:flex;flex-direction:column;gap:6px">
         <p class="tag grey">TALKS</p>
@@ -73,7 +73,7 @@ const SHOW_OFFAXIS = false;
   <section id="teaching" class="section">
     <h2>Teaching</h2>
     <div class="body">
-      {[['[Course number] — [Course name]','TA · UCSD · [term]'],['[Course number] — [Course name]','TA · UCSD · [term]'],['Upper-level mathematics courses','TA · Brown · 2018–2020']].map(([c, t]) => (
+      {[['Enumerative Combinatorics','Lead TA · UCSD'],['Graph Theory','Lead TA · UCSD'],['Number Theory','Lead TA · UCSD'],['Linear Algebra','Lead TA · UCSD'],['Calculus I–II','Lead TA · UCSD'],['Measure Theory, Complex Analysis, Abstract Algebra, Cryptography, Geometry','TA · Brown · 2018–2020']].map(([c, t]) => (
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding:14px 0;border-bottom:1px dashed var(--rule-2)">
           <span>{c}</span><span class="mono muted" style="font-size:14px">{t}</span>
         </div>
