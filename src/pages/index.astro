@@ -11,20 +11,30 @@ const latest = notes[0];
 // Set to true to show the Off-axis section again (also re-add it to the nav in src/layouts/Base.astro).
 const SHOW_OFFAXIS = false;
 
-// Courses taught, MOST RECENT FIRST. Add new ones at the top.
-// role: 'TA' or 'Lead TA'. The list shows about 5 at a time and scrolls.
-const teaching = [
-  { course: 'Enumerative Combinatorics', term: '[quarter]', school: 'UCSD', role: 'TA' },
-  { course: 'Graph Theory', term: '[quarter]', school: 'UCSD', role: 'TA' },
-  { course: 'Number Theory', term: '[quarter]', school: 'UCSD', role: 'TA' },
-  { course: 'Linear Algebra', term: '[quarter]', school: 'UCSD', role: 'Lead TA' },
-  { course: 'Calculus I–II', term: '[quarter]', school: 'UCSD', role: 'TA' },
-  { course: 'Measure Theory', term: '[semester]', school: 'Brown', role: 'TA' },
-  { course: 'Complex Analysis', term: '[semester]', school: 'Brown', role: 'TA' },
-  { course: 'Abstract Algebra', term: '[semester]', school: 'Brown', role: 'TA' },
-  { course: 'Cryptography', term: '[semester]', school: 'Brown', role: 'TA' },
-  { course: 'Geometry', term: '[semester]', school: 'Brown', role: 'TA' },
+// Courses taught. One entry per course; list every term you taught it.
+// Order doesn't matter: courses and terms are sorted newest first automatically.
+// To add a quarter, append it to that course's `terms`. Mark Lead TA terms in `lead`.
+const SEASONS = { 'Winter': 1, 'Spring': 2, 'Summer I': 3, 'Summer II': 4, 'Summer': 3, 'Fall': 5 };
+const termKey = (t) => {
+  const m = t.match(/^(.*) (\d{4})$/);
+  return m && SEASONS[m[1]] ? Number(m[2]) * 10 + SEASONS[m[1]] : 0;
+};
+const courses = [
+  { code: 'MATH 184', title: 'Enumerative Combinatorics', terms: ['Fall 2026'] },
+  { code: 'MATH 154', title: 'Graph Theory', terms: ['Summer I 2026'] },
+  { code: 'MATH 180A', title: 'Introduction to Probability', terms: ['Spring 2026'] },
+  { code: 'MATH 104A', title: 'Number Theory', terms: ['Winter 2026'] },
+  { code: 'MATH 109', title: 'Introduction to Mathematical Thinking', terms: ['Winter 2026', 'Fall 2025', 'Summer II 2025', 'Spring 2025'] },
+  { code: 'MATH 189', title: 'Exploratory Data Analysis and Inference', terms: ['Summer II 2025'] },
+  { code: 'MATH 20B', title: 'Calculus II', terms: ['Summer I 2025', 'Fall 2023'] },
+  { code: 'MATH 18', title: 'Linear Algebra', terms: ['Winter 2025', 'Winter 2024', 'Spring 2023', 'Winter 2023'], lead: ['[which quarter(s)?]'] },
+  { code: 'MATH 10B', title: 'Calculus II', terms: ['Fall 2024', 'Summer I 2024'] },
+  { code: 'MATH 10A', title: 'Calculus I', terms: ['Spring 2024', 'Fall 2022'] },
 ];
+const teaching = courses
+  .map((c) => ({ ...c, terms: [...c.terms].sort((a, b) => termKey(b) - termKey(a)) }))
+  .sort((a, b) => termKey(b.terms[0]) - termKey(a.terms[0]));
+const quartersTaught = courses.reduce((n, c) => n + c.terms.length, 0);
 ---
 <Base>
   <section style="display:flex;flex-wrap:wrap;align-items:center;gap:48px;padding:72px 0 56px">
@@ -88,15 +98,17 @@ const teaching = [
   <section id="teaching" class="section">
     <h2>Teaching</h2>
     <div class="body">
-      <div class="scroll-list" tabindex="0" role="region" aria-label="Courses taught, most recent first">
-        {teaching.map((t) => (
+      <p class="mono muted" style="margin:0 0 14px;font-size:13px">UC San Diego · {quartersTaught} quarters across {teaching.length} courses, 2022–present</p>
+      <div class="scroll-list" tabindex="0" role="region" aria-label="Courses taught at UC San Diego, most recent first">
+        {teaching.map((c) => (
           <div class="scroll-row">
-            <span>{t.course}{t.role === 'Lead TA' && <span class="tag red" style="display:inline;margin-left:10px">LEAD TA</span>}</span>
-            <span class="mono muted" style="font-size:14px">{t.term} · {t.school}</span>
+            <span><span class="mono muted" style="font-size:13px;margin-right:10px">{c.code}</span>{c.title}{c.lead && <span class="tag red" style="display:inline;margin-left:10px">LEAD TA</span>}</span>
+            <span class="mono muted" style="flex-basis:100%;font-size:13px">{c.terms.map((t) => (c.lead && c.lead.includes(t) ? `${t} (Lead TA)` : t)).join(' · ')}</span>
           </div>
         ))}
       </div>
-      {teaching.length > 5 && <p class="mono muted" style="margin:10px 0 0;font-size:12px">Scroll for earlier courses ↓</p>}
+      <p class="mono muted" style="margin:10px 0 0;font-size:12px">Scroll for earlier courses ↓</p>
+      <p class="muted" style="margin:24px 0 0;font-size:15px">Earlier: TA at Brown University, 2018–2020, for Measure Theory, Complex Analysis, Abstract Algebra, Cryptography and Geometry.</p>
     </div>
   </section>
 

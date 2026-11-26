@@ -63,7 +63,7 @@ a:hover { color: var(--blue); }
 .prose pre { overflow-x: auto; padding: 16px; background: var(--card); border-radius: 10px; font-size: 14px; }
 
 /* Teaching list: about five rows visible, the rest scroll */
-.scroll-list { max-height: 265px; overflow-y: auto; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); scrollbar-width: thin; scrollbar-color: var(--rule-2) transparent; }
+.scroll-list { max-height: 400px; overflow-y: auto; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); scrollbar-width: thin; scrollbar-color: var(--rule-2) transparent; }
 .scroll-list:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
-.scroll-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; padding: 14px 4px 14px 0; border-bottom: 1px dashed var(--rule-2); }
+.scroll-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 8px; padding: 14px 4px 14px 0; border-bottom: 1px dashed var(--rule-2); }
 .scroll-row:last-child { border-bottom: 0; }
