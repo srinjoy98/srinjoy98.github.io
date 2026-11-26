@@ -8,6 +8,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const notes = Object.values(import.meta.glob('./notes/*.md', { eager: true }))
   .sort((a, b) => String(b.frontmatter.date).localeCompare(String(a.frontmatter.date)));
 const latest = notes[0];
+// Set to true to show the Off-axis section again (also re-add it to the nav in src/layouts/Base.astro).
+const SHOW_OFFAXIS = false;
 ---
 <Base>
   <section style="display:flex;flex-wrap:wrap;align-items:center;gap:48px;padding:72px 0 56px">
@@ -18,7 +20,7 @@ const latest = notes[0];
       </div>
       <h1 class="display" style="margin:0;font-weight:800;font-size:clamp(56px,9vw,84px);line-height:.95;letter-spacing:-2.5px">Srinjoy Srimani<span style="color:var(--red)">.</span></h1>
       <p style="margin:28px 0 0;font-size:21px;line-height:1.55;max-width:560px">I work in extremal and probabilistic combinatorics at UC San Diego, advised by Jacques Verstraete. Current projects: Eulerian orientations of regular graphs, explicit linear triple systems with small independence number, and Ramsey theory.</p>
-      <p class="muted" style="margin:16px 0 0;font-size:17px;line-height:1.6;max-width:560px">Before UCSD: MASt (Part III) at the University of Cambridge, with Distinction; Sc.B. in Mathematics–Computer Science at Brown University (Hartshorne Freshman Prize); Budapest Semesters in Mathematics, Spring 2019.</p>
+      <p class="muted" style="margin:16px 0 0;font-size:17px;line-height:1.6;max-width:560px">Before UCSD: MASt (Part III) at the University of Cambridge; Sc.B. in Mathematics–Computer Science at Brown University (Hartshorne Freshman Prize); Budapest Semesters in Mathematics, Spring 2019.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px">
         <a class="btn solid" href={`${base}/cv.pdf`}>CV (PDF)</a>
         <a class="btn" href={`${base}/notes/`}>Read the notes →</a>
@@ -43,7 +45,7 @@ const latest = notes[0];
       <article style="display:flex;flex-direction:column;gap:6px">
         <p class="tag grey">EXPOSITORY</p>
         <h3 style="margin:0;font-size:20px;font-weight:500">Diagonal Ramsey numbers</h3>
-        <p class="muted" style="margin:0">Part III essay, University of Cambridge · supervised by Tim Gowers · <a href="#">pdf</a></p>
+        <p class="muted" style="margin:0">Part III essay, University of Cambridge · supervised by Tim Gowers · awarded a Distinction · <a href="#">pdf</a></p>
       </article>
       <article style="display:flex;flex-direction:column;gap:6px">
         <p class="tag grey">TALKS</p>
@@ -79,6 +81,7 @@ const latest = notes[0];
     </div>
   </section>
 
+  {SHOW_OFFAXIS && (
   <section id="offaxis" class="section">
     <h2>Off-axis</h2>
     <div class="body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px">
@@ -88,4 +91,5 @@ const latest = notes[0];
       <div class="tile"><p style="font-weight:500">History, currently</p><p>[The era you're reading about, and why]</p></div>
     </div>
   </section>
+  )}
 </Base>
