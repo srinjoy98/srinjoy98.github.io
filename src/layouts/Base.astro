@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-const { title = 'Srinjoy Srimani', description = 'Srinjoy Srimani — mathematics PhD student at UC San Diego.' } = Astro.props;
+const { title = 'Srinjoy Srimani', description = 'Srinjoy Srimani — mathematics PhD candidate at UC San Diego, working in extremal and probabilistic combinatorics.' } = Astro.props;
 // Visitor counter: sign up at goatcounter.com, then put your site code here (e.g. 'srinjoy').
 // Leave empty to turn the counter off.
 const GOATCOUNTER = '';
@@ -46,7 +46,7 @@ const nav = [
     <footer class="site-footer">
       <span>[email]@ucsd.edu · Office: [room], AP&amp;M</span>
       <span style="display:flex;gap:20px">
-        <a href={`${base}/cv.pdf`}>CV</a><a href="#">GitHub</a><a href="#">arXiv</a><a href="#">Scholar</a>
+        <a href={`${base}/cv.pdf`}>CV</a><a href="https://github.com/srinjoy98">GitHub</a><a href="#">arXiv</a><a href="#">Scholar</a>
       </span>
       {GOATCOUNTER && <span id="visits" style="flex-basis:100%;font-size:12px">Visits since [year]: </span>}
       <p class="credit">Site design and code made entirely with AI (Claude, by Anthropic); I don't claim credit for them. The mathematics is mine.</p>
