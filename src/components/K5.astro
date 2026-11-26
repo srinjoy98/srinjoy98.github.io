@@ -1,0 +1,14 @@
+---
+// Pentagon red, pentagram blue: a 2-colouring of K5 with no monochromatic triangle, so R(3,3) > 5.
+const P = [[200,40],[352,151],[294,329],[106,329],[48,151]];
+const outer = P.map((p, i) => [p, P[(i + 1) % 5]]);
+const inner = P.map((p, i) => [p, P[(i + 2) % 5]]);
+---
+<figure style="flex:1 1 340px;margin:0;display:flex;flex-direction:column;align-items:center;gap:10px">
+  <svg viewBox="0 0 400 380" style="width:100%;max-width:400px" role="img" aria-label="Complete graph on five vertices: outer pentagon red, inner pentagram blue; no triangle is monochromatic">
+    {outer.map(([a, b]) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} style="stroke:var(--red);stroke-width:7;stroke-linecap:round" />)}
+    {inner.map(([a, b]) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} style="stroke:var(--blue);stroke-width:4;stroke-dasharray:2 9;stroke-linecap:round" />)}
+    {P.map(([x, y]) => <circle cx={x} cy={y} r="11" style="fill:var(--ink)" />)}
+  </svg>
+  <figcaption style="font-family:'STIX Two Text',serif;font-size:19px;color:var(--muted)"><i>R</i>(3,3) &gt; 5 <span class="mono" style="font-size:12px">— the colouring that proves it</span></figcaption>
+</figure>

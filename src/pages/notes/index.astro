@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+const notes = Object.values(import.meta.glob('./*.md', { eager: true }))
+  .filter((n) => !n.frontmatter.draft)
+  .sort((a, b) => String(b.frontmatter.date).localeCompare(String(a.frontmatter.date)));
+---
+<Base title="Notes — Srinjoy Srimani">
+  <section style="padding:64px 0 80px">
+    <h1 class="display" style="margin:0 0 40px;font-weight:800;font-size:56px;letter-spacing:-1.5px">Notes</h1>
+    {notes.length === 0 && <p class="muted">Nothing here yet.</p>}
+    {notes.map((n) => (
+      <a href={n.url} style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding:20px 0;border-bottom:1px dashed var(--rule-2);text-decoration:none">
+        <span class="display" style="font-size:24px;font-weight:700">{n.frontmatter.title}</span>
+        <span class="mono muted" style="font-size:14px">{n.frontmatter.topic} · {n.frontmatter.date}</span>
+      </a>
+    ))}
+  </section>
+</Base>

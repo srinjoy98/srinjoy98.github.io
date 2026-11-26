@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+const { title = 'Srinjoy Srimani', description = 'Srinjoy Srimani — mathematics PhD student at UC San Diego.' } = Astro.props;
+// Visitor counter: sign up at goatcounter.com, then put your site code here (e.g. 'srinjoy').
+// Leave empty to turn the counter off.
+const GOATCOUNTER = '';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname;
+const nav = [
+  ['research', `${base}/#research`],
+  ['teaching', `${base}/#teaching`],
+  ['notes', `${base}/notes/`],
+  ['playground', `${base}/playground/`],
+  ['off-axis', `${base}/#offaxis`],
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=STIX+Two+Text:ital@0;1&display=swap" rel="stylesheet" />
+  <script is:inline>
+    // Apply a saved theme before paint (no flash). Otherwise follow the OS setting.
+    try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a class="wordmark" href={`${base}/`}>Srinjoy Srimani</a>
+      <nav class="site-nav" aria-label="Main">
+        {nav.map(([label, href]) => (
+          <a href={href} aria-current={path.startsWith(href) && !href.includes('#') ? 'page' : undefined}>{label}</a>
+        ))}
+        <button class="theme-toggle mono" type="button" id="theme-toggle" aria-label="Toggle dark mode">◐</button>
+      </nav>
+    </header>
+
+    <main><slot /></main>
+
+    <footer class="site-footer">
+      <span>[email]@ucsd.edu · Office: [room], AP&amp;M</span>
+      <span style="display:flex;gap:20px">
+        <a href={`${base}/cv.pdf`}>CV</a><a href="#">GitHub</a><a href="#">arXiv</a><a href="#">Scholar</a>
+      </span>
+      {GOATCOUNTER && <span id="visits" style="flex-basis:100%;font-size:12px">Visits since [year]: </span>}
+      <p class="credit">Site design and code made entirely with AI (Claude, by Anthropic); I don't claim credit for them. The mathematics is mine.</p>
+    </footer>
+  </div>
+  <script is:inline>
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const root = document.documentElement;
+      const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = dark ? 'light' : 'dark';
+      try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    });
+  </script>
+  {GOATCOUNTER && (
+    <>
+      <script is:inline>
+        var t = setInterval(function () {
+          if (window.goatcounter && window.goatcounter.visit_count) {
+            clearInterval(t);
+            window.goatcounter.visit_count({ append: '#visits', path: 'TOTAL', no_branding: true,
+              style: 'div { font-family: IBM Plex Mono, monospace; font-size: 12px; background: none; border: 0; }' });
+          }
+        }, 100);
+      </script>
+      <script is:inline async data-goatcounter={`https://${GOATCOUNTER}.goatcounter.com/count`} src="https://gc.zgo.at/count.js"></script>
+    </>
+  )}
+</body>
+</html>
